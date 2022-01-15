@@ -31,3 +31,18 @@ AddEventHandler('gvrp_alarm', function(pw)
     DropPlayer(source, "No modding allowed.")
 	end
 end)
+
+RegisterServerEvent('policeNotification')
+AddEventHandler('policeNotification', function(rainson)
+	local _source = source
+	local _raison = rainson
+	local xPlayer = ESX.GetPlayerFromId(_source)
+	local xPlayers = ESX.GetPlayers()
+
+	for i = 1, #xPlayers, 1 do
+		local thePlayer = ESX.GetPlayerFromId(xPlayers[i])
+		if thePlayer.job.name == 'police' then
+			TriggerClientEvent('police:InfoService', xPlayers[i], _raison)
+		end
+	end
+end)

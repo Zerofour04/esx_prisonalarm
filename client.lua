@@ -1,9 +1,7 @@
 ESX = nil
 local PlayerData = {}
 local spawned = false
-local isinprison = false
 local eventpassword = ""
-
 
 Citizen.CreateThread(function()
 	TriggerServerEvent('gvrp_getpw')
@@ -39,34 +37,33 @@ end)
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
     ESX.PlayerData.job = job
-
 end)
 
 Citizen.CreateThread(function()
 	while true do
-	Citizen.Wait(10000)
-	if spawned then
-	local playerPos = GetEntityCoords(PlayerPedId(), true)
-	PlayerData = ESX.GetPlayerData()
+		Citizen.Wait(10000)
 
-	if PlayerData.job.name == "ambulance" or PlayerData.job.name == 'police' then return end
-
-
-	ESX.TriggerServerCallback("esx-qalle-jail:retrieveJailTime", function(inJail, newJailTime)
-		if inJail then
-	                local distance = Vdist(playerPos.x, playerPos.y, playerPos.z, 1690.28, 2582.4, 45.92)
-			if distance < 130.0 then
-		            TriggerServerEvent("gvrp_alarm", eventpassword)
-                        else
-                            Wait(5000)
-			    StopAllAlarms(true)
-                        end
-                end
-         end)
-end
-end
+		if spawned then
+			local playerPos = GetEntityCoords(PlayerPedId(), true)
+			PlayerData = ESX.GetPlayerData()
+			if PlayerData.job.name == "ambulance" or PlayerData.job.name == 'police' then
+				return
+			end
+						
+			ESX.TriggerServerCallback("esx-qalle-jail:retrieveJailTime", function(inJail, newJailTime)
+				if inJail then
+					local distance = Vdist(playerPos.x, playerPos.y, playerPos.z, 1690.28, 2582.4, 45.92)
+					if distance < 130.0 then
+						TriggerServerEvent("gvrp_alarm", eventpassword)
+					else
+						Wait(5000)
+						StopAllAlarms(true)
+					end
+				end
+			end)
+		end
+	end
 end)
-
 
 RegisterNetEvent("gvrp_prisonalarm")
 AddEventHandler("gvrp_prisonalarm", function()
@@ -74,4 +71,10 @@ AddEventHandler("gvrp_prisonalarm", function()
 		Citizen.Wait(0)
 	end
 	StartAlarm("PRISON_ALARMS", 1)
+end)
+
+
+RegisterNetEvent('policeEscapeNoti')
+AddEventHandler('policeEscapeNoti', function()
+	ESX.ShowNotification('10-74 A prisoner is escaping!')
 end)
