@@ -11,9 +11,7 @@ I updated this resource. !!!I haven't testt it yet, so maybe it is working maybe
 - Codecleanup
 
 ## 🖼️Preview:
-[Video](https://streamable.com/5wruyb)
-<div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe src="https://streamable.com/e/5wruyb" frameborder="0" width="100%" height="100%" allowfullscreen style="width: 100%; height: 100%; position: absolute;"></iframe>
-</div>
+![Video](https://streamable.com/5wruyb)
 
 ## 🧱Requirements:
 - ESX
